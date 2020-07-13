@@ -21,9 +21,9 @@ public class GameController_Script : MonoBehaviour
 		//Excute when keyboard button R pressed
 		if(Input.GetKey("r"))
 		{
-			Application.LoadLevel(0);		//Load Level 0 (same Level) to make a restart
+			Application.LoadLevel(1);		//Load Level 0 (same Level) to make a restart
 		}
-	}		
+    }		
 
     IEnumerator SpawnAnEnemy()
     {

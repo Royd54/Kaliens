@@ -13,7 +13,7 @@ public class FollowUV : MonoBehaviour {
 
 		Vector2 offset = mat.mainTextureOffset;
 
-		offset.x = transform.position.x / transform.localScale.x / parralax;
+		offset.x = transform.position.x / transform.localScale.x  / parralax;
 		offset.y = transform.position.y / transform.localScale.y / parralax;
 
 		mat.mainTextureOffset = offset;

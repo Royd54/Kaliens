@@ -7,7 +7,7 @@ public class PickupSpawner : MonoBehaviour
     [SerializeField] private float spawnRadius = 7, time = 2f;
     [SerializeField] private GameObject player;
     [SerializeField] private int pickupsAmount;
-    [SerializeField] private int maxPickupsAmount = 4;
+    [SerializeField] private int maxPickupsAmount = 1;
 
     public GameObject[] pickups;
 
@@ -26,6 +26,7 @@ public class PickupSpawner : MonoBehaviour
         if (pickupsAmount < maxPickupsAmount)
         {
             Instantiate(pickups[Random.Range(0, pickups.Length)], spawnPos, Quaternion.identity);
+            pickupsAmount += 1;
         }
         yield return new WaitForSeconds(time);
         StartCoroutine(SpawnAnPickup());

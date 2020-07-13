@@ -14,7 +14,7 @@ public class Player_Script : MonoBehaviour
 
     void Start()
     {
-        rb2d = GetComponent<Rigidbody2D>();
+        rb2d = GetComponent<Rigidbody2D>();	
     }
 
     void Update()
@@ -55,7 +55,8 @@ public class Player_Script : MonoBehaviour
 		{
 			Instantiate (Explosion, transform.position , transform.rotation); 				//Instantiate Explosion
 			SharedValues_Script.gameover = true; 											//Trigger That its a GameOver
-			Destroy(gameObject); 															//Destroy Player Ship Object
+			//Destroy(gameObject); 															//Destroy Player Ship Object
+            gameObject.SetActive(false);
 		}
 	}
 }

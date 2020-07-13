@@ -12,7 +12,7 @@ public class SharedValues_Script : MonoBehaviour
 
 	//Public Shared Var
 	public static int score = 0; 			//Total in-game Score
-	public static bool gameover = false; 	//GameOver Trigger
+	public static bool gameover = true; 	//GameOver Trigger
 
 	// Use this for initialization
 	void Start () 
