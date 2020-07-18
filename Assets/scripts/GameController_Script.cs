@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class GameController_Script : MonoBehaviour 
 {
@@ -11,6 +12,7 @@ public class GameController_Script : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+        Application.targetFrameRate = 60;
         player = GameObject.Find("Player");
         StartCoroutine(SpawnAnEnemy());
     }
@@ -18,24 +20,49 @@ public class GameController_Script : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
-		//Excute when keyboard button R pressed
-		if(Input.GetKey("r"))
+        if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("Menu"))
+        {
+            //Excute when keyboard button R pressed
+            if (Input.GetKey("r"))
+            {
+                Application.LoadLevel(1);       //Load Level 0 (same Level) to make a restart
+            }
+
+            //Excute when keyboard button R pressed
+            if (Input.touchCount > 0)
+            {
+                Application.LoadLevel(1);       //Load Level 0 (same Level) to make a restart
+            }
+        }
+
+        //Excute when keyboard button R pressed
+        if (Input.GetKey("r") && SharedValues_Script.gameover == true)
 		{
 			Application.LoadLevel(1);		//Load Level 0 (same Level) to make a restart
 		}
+
+        //Excute when keyboard button R pressed
+        if (Input.touchCount > 0 && SharedValues_Script.gameover == true)
+        {
+            Application.LoadLevel(1);       //Load Level 0 (same Level) to make a restart
+        }
     }		
 
     IEnumerator SpawnAnEnemy()
     {
-        Vector2 spawnPos = player.transform.position;
-        spawnPos += Random.insideUnitCircle.normalized * spawnRadius;
-
-        Instantiate(enemies[Random.Range(0, enemies.Length)], spawnPos, Quaternion.identity);
-        if (time >= 0.5f)
+        if (SharedValues_Script.gameover == false)
         {
-            time -= 0.01f;
+            Vector2 spawnPos = player.transform.position;
+            spawnPos += Random.insideUnitCircle.normalized * spawnRadius;
+
+            Instantiate(enemies[Random.Range(0, enemies.Length)], spawnPos, Quaternion.identity);
+            if (time >= 0.5f)
+            {
+                time -= 0.01f;
+            }
+            yield return new WaitForSeconds(time);
+            StartCoroutine(SpawnAnEnemy());
         }
         yield return new WaitForSeconds(time);
-        StartCoroutine(SpawnAnEnemy());
     }
 }

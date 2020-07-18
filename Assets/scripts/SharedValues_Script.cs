@@ -6,13 +6,15 @@ public class SharedValues_Script : MonoBehaviour
 {
 	//Public Var
 	public TextMeshProUGUI scoreText; 				//GUI Score
-	public TextMeshProUGUI GameOverText; 			//GUI GameOver
+    public TextMeshProUGUI fuelScoreText;           //GUI Score
+    public TextMeshProUGUI GameOverText; 			//GUI GameOver
 	public TextMeshProUGUI FinalScoreText; 			//GUI Final Score
 	public TextMeshProUGUI ReplayText; 				//GUI Replay
 
-	//Public Shared Var
-	public static int score = 0; 			//Total in-game Score
-	public static bool gameover = true; 	//GameOver Trigger
+    //Public Shared Var
+    public static int score = 0; 			//Total in-game Score
+    public static int fuelScore = 0;            //Total in-game Score
+    public static bool gameover = true; 	//GameOver Trigger
 
 	// Use this for initialization
 	void Start () 
@@ -25,9 +27,10 @@ public class SharedValues_Script : MonoBehaviour
 	void FixedUpdate ()
 	{
 		scoreText.text = "Score: " + score; 			//Update the GUI Score
+        fuelScoreText.text = "" + fuelScore;                 //Update the GUI Score
 
-		//Excute when the GameOver Trigger is True
-		if (gameover == true)
+        //Excute when the GameOver Trigger is True
+        if (gameover == true)
 		{
 			GameOverText.text = "GAME OVER"; 			//Show GUI GameOver
 			FinalScoreText.text = "" + score; 			//Show GUI FinalScore

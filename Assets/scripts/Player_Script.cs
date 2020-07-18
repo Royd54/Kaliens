@@ -31,8 +31,30 @@ public class Player_Script : MonoBehaviour
 
     private void GetPlayerInput()
     {
-        _horizontalInput = Input.GetAxisRaw("Horizontal");
-        _verticalInput = Input.GetAxisRaw("Vertical");
+        int i = 0;
+        while (i < Input.touchCount)
+        {
+            if (Input.GetTouch(i).position.x > Screen.width / 2 && Input.GetTouch(i).phase == TouchPhase.Stationary)
+            {
+                _horizontalInput = 1.0f;
+            }
+            else if(Input.GetTouch(i).phase == TouchPhase.Ended || Input.GetTouch(i).phase == TouchPhase.Canceled)
+            {
+                _horizontalInput = 0f;
+            }
+
+            if (Input.GetTouch(i).position.x < Screen.width / 2 && Input.GetTouch(i).phase == TouchPhase.Stationary)
+            {
+                _horizontalInput = -1.0f;
+            }
+            else if(Input.GetTouch(i).phase == TouchPhase.Ended || Input.GetTouch(i).phase == TouchPhase.Canceled)
+            {
+                _horizontalInput = 0f;
+            }
+            i++;
+        }
+       // _horizontalInput = Input.GetAxisRaw("Horizontal");
+       // _verticalInput = Input.GetAxisRaw("Vertical");
     }
 
     private void RotatePlayer()
@@ -51,12 +73,18 @@ public class Player_Script : MonoBehaviour
 	{
 
 		//Excute if the object tag was equal to one of these
-		if(other.tag == "Enemy" || other.tag == "Asteroid" || other.tag == "EnemyShot") 
+		if(other.tag == "Enemy") 
 		{
 			Instantiate (Explosion, transform.position , transform.rotation); 				//Instantiate Explosion
-			SharedValues_Script.gameover = true; 											//Trigger That its a GameOver
-			//Destroy(gameObject); 															//Destroy Player Ship Object
-            gameObject.SetActive(false);
-		}
+			SharedValues_Script.gameover = true;                                            //Trigger That its a GameOver
+
+            rb2d.velocity = new Vector2(0,0);
+            GetComponent<Player_Script>().enabled = false;
+            for (int i = 0;i < GetComponentsInChildren<SpriteRenderer>().Length; i++)
+            {
+                GetComponentsInChildren<SpriteRenderer>()[i].enabled = false;
+            }
+            
+        }
 	}
 }

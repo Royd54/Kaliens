@@ -19,21 +19,31 @@ public class HomingMissile : MonoBehaviour {
 	}
 	
 	void Update () {
-		Vector2 direction = (Vector2)target.position - rb.position;
+        if(SharedValues_Script.gameover == false)
+        {
+            Vector2 direction = (Vector2)target.position - rb.position;
 
-		direction.Normalize();
+            direction.Normalize();
 
-		float rotateAmount = Vector3.Cross(direction, transform.up).z;
+            float rotateAmount = Vector3.Cross(direction, transform.up).z;
 
-		rb.angularVelocity = -rotateAmount * rotateSpeed;
+            rb.angularVelocity = -rotateAmount * rotateSpeed;
 
-		rb.velocity = transform.up * speed;
+            rb.velocity = transform.up * speed;
+        }
+        else
+        {
+            rb.velocity = new Vector2(0, 0);
+        }
 	}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Instantiate(collisionEffect, transform.position, transform.rotation);
-        SharedValues_Script.score += ScoreValue;
-        Destroy(gameObject);
+        if (collision.gameObject.tag != "Astroid")
+        {
+            Instantiate(collisionEffect, transform.position, transform.rotation);
+            SharedValues_Script.score += ScoreValue;
+            Destroy(gameObject);
+        }
     }
 }
